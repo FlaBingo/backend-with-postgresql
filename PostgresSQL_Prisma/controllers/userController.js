@@ -5,15 +5,21 @@ export const createUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
+        if(!email){
+            return res.status(400).json({message: "Please Provide your email"})
+        }
         const findUser = await prisma.user.findUnique({
             where:{ email }
         })
         if(findUser){
             return res.status(400).json({status: 400, message:"Email Already Taken..."})
         }
-        const hashedPassword = await bcrypt.hash()
+        let hashedPassword;
+        if(password){
+            hashedPassword = await bcrypt.hash(password, 8);
+        }
         const newUser = await prisma.user.create({
-            data:{ name, email, password }
+            data:{ name, email, password:hashedPassword }
         })
 
         return res.status(201).json({message: "User created successfully"})
