@@ -1,3 +1,5 @@
+"use client";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 
@@ -15,7 +17,7 @@ const SignInPage = () => {
         </div>
 
         <div className="mt-8">
-          <button className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors duration-200 cursor-pointer">
+          <button onClick={() => signIn("github")} className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors duration-200 cursor-pointer">
             <Image src={"/github.png"} alt="github" width={20} height={20} />
             <span className="text-base font-medium">Continue with Github</span>
           </button>
